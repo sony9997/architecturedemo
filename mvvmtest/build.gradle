@@ -1,12 +1,12 @@
 def prouardEnable = false
-def WPOS_APP_VERSION_CODE = "${new Date().format('yyMMddHHmm')}".toInteger()
-def WPOS_APP_VERSION_NAME = "HED.${WPOS_APP_VERSION_CODE}"
+def DEMO_APP_VERSION_CODE = "${new Date().format('yyMMddHHmm')}".toInteger()
+def DEMO_APP_VERSION_NAME = "HED.${DEMO_APP_VERSION_CODE}"
 
 // sign
-def WPOS_APP_STORE_FILE = "wall.keystore"
-def WPOS_APP_STORE_PWD = "shellinfoem"
-def WPOS_APP_KEY_ALIAS = "shellinfo"
-def WPOS_APP_KEY_PWD = "shellinfoem"
+def DEMO_APP_STORE_FILE = "hed.keystore"
+def DEMO_APP_STORE_PWD = "hed123"
+def DEMO_APP_KEY_ALIAS = "hedalias"
+def DEMO_APP_KEY_PWD = "hed123"
 apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
@@ -16,25 +16,25 @@ android {
         applicationId "org.hed.archdemo"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode WPOS_APP_VERSION_CODE
-        versionName "${WPOS_APP_VERSION_NAME}"
+        versionCode DEMO_APP_VERSION_CODE
+        versionName "${DEMO_APP_VERSION_NAME}"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
 
     signingConfigs {
-        wposConfig {
-            storeFile file(WPOS_APP_STORE_FILE)
-            storePassword WPOS_APP_STORE_PWD
-            keyAlias WPOS_APP_KEY_ALIAS
-            keyPassword WPOS_APP_KEY_PWD
+        DEMOConfig {
+            storeFile file(DEMO_APP_STORE_FILE)
+            storePassword DEMO_APP_STORE_PWD
+            keyAlias DEMO_APP_KEY_ALIAS
+            keyPassword DEMO_APP_KEY_PWD
         }
     }
 
     buildTypes {
         release {
-            signingConfig signingConfigs.wposConfig
+            signingConfig signingConfigs.DEMOConfig
             minifyEnabled prouardEnable
             useProguard prouardEnable
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
