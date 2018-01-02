@@ -3,13 +3,14 @@ package org.hed.archdemo.repository;
 import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
+import org.hed.archdemo.model.User;
+import org.hed.archdemo.repository.db.dao.UserDao;
+import org.hed.archdemo.repository.web.GithubApi;
+
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.hed.archdemo.model.User;
-import org.hed.archdemo.repository.db.AppDatabase;
-import org.hed.archdemo.repository.web.RetrofitHelper;
 import io.reactivex.Completable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
@@ -23,15 +24,13 @@ import io.reactivex.schedulers.Schedulers;
 
 public class UserRepository {
     private static final String tag="UserRepository";
-    @Inject
-    AppDatabase appDatabase;
+    private final UserDao userDao;
+    private final GithubApi githubService;
 
     @Inject
-    RetrofitHelper retrofitHelper;
-
-    public UserRepository(AppDatabase appDatabase, RetrofitHelper retrofitHelper) {
-        this.appDatabase = appDatabase;
-        this.retrofitHelper = retrofitHelper;
+    public UserRepository(UserDao userDao, GithubApi githubService) {
+        this.userDao=userDao;
+        this.githubService = githubService;
     }
 
     /**
@@ -40,7 +39,7 @@ public class UserRepository {
      * @return
      */
     public LiveData<List<User>> loadAllUsers() {
-        retrofitHelper.getGithubApi().getUserList()
+        githubService.getUserList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
                 .doOnNext(new Consumer<List<User>>() {
@@ -48,7 +47,7 @@ public class UserRepository {
                     public void accept(List<User> users) throws Exception {
                         Log.d(tag,"onNext:"+Thread.currentThread().getName());
                         Log.d(tag,"users:"+users);
-                        appDatabase.userDao().addUsers(users);
+                        userDao.addUsers(users);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
@@ -68,7 +67,7 @@ public class UserRepository {
                         Log.d(tag,"onComplete");
                     }
                 });
-        return appDatabase.userDao().loadAllUsers();
+        return userDao.loadAllUsers();
     }
 
     /**
@@ -79,7 +78,7 @@ public class UserRepository {
         return Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
-                appDatabase.userDao().insertUser(user);
+                userDao.insertUser(user);
             }
         });
     }
@@ -94,7 +93,7 @@ public class UserRepository {
         return Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
-                appDatabase.userDao().updateUser(user);
+                userDao.updateUser(user);
             }
         });
     }
@@ -109,7 +108,7 @@ public class UserRepository {
         return Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
-                appDatabase.userDao().deleteUser(user);
+                userDao.deleteUser(user);
             }
         });
     }

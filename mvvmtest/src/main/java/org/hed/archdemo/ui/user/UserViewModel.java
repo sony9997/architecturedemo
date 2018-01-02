@@ -1,15 +1,15 @@
-package org.hed.archdemo.viewmodel;
+package org.hed.archdemo.ui.user;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModel;
 import android.support.annotation.NonNull;
 
 import java.util.List;
 
 import javax.inject.Inject;
 
-import org.hed.archdemo.injection.UserComponent;
 import org.hed.archdemo.model.User;
 import org.hed.archdemo.repository.UserRepository;
 
@@ -17,19 +17,11 @@ import org.hed.archdemo.repository.UserRepository;
  * Created by hedong on 2017/11/28.
  */
 
-public class UserViewModel extends AndroidViewModel implements UserComponent.Injectable{
+public class UserViewModel extends ViewModel {
     private LiveData<List<User>> users;
 
     @Inject
-    UserRepository userRepository;
-
-    public UserViewModel(@NonNull Application application){
-        super(application);
-    }
-
-    @Override
-    public void inject(UserComponent userComponent) {
-        userComponent.inject(this);
+    public UserViewModel(UserRepository userRepository){
         users=userRepository.loadAllUsers();
     }
 

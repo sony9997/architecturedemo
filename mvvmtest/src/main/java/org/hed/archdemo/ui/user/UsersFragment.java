@@ -1,8 +1,8 @@
-package org.hed.archdemo.ui.fragment;
+package org.hed.archdemo.ui.user;
 
-import android.app.Application;
 import android.arch.lifecycle.LifecycleFragment;
 import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -13,21 +13,24 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-
 import org.hed.archdemo.R;
-import org.hed.archdemo.TestApp;
 import org.hed.archdemo.databinding.ListFragmentBinding;
 import org.hed.archdemo.databinding.UsersItemBinding;
-import org.hed.archdemo.injection.UserViewModelFactory;
+import org.hed.archdemo.di.Injectable;
 import org.hed.archdemo.model.User;
-import org.hed.archdemo.viewmodel.UserViewModel;
+
+import java.util.List;
+
+import javax.inject.Inject;
 
 /**
  * Created by hedong on 2017/11/30.
  */
 
-public class UsersFragment extends LifecycleFragment {
+public class UsersFragment extends LifecycleFragment implements Injectable {
+    @Inject
+    ViewModelProvider.Factory viewModelFactory;
+
     private ListFragmentBinding mBinding;
     private UsersAdapter usersAdapter=new UsersAdapter();
 
@@ -43,9 +46,7 @@ public class UsersFragment extends LifecycleFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Application application = getActivity().getApplication();
-        final UserViewModel viewModel =
-                ViewModelProviders.of(this, new UserViewModelFactory((TestApp) application)).get(UserViewModel.class);
+        final UserViewModel viewModel= ViewModelProviders.of(this, viewModelFactory).get(UserViewModel.class);
         viewModel.getUsers().observe(this, new Observer<List<User>>() {
             @Override
             public void onChanged(@Nullable List<User> users) {
