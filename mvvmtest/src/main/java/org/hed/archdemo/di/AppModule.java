@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 /**
  * Created by hedong on 2018/1/2.
  */
-@Module
+@Module(includes = ViewModelModule.class)
 class AppModule {
     @Singleton
     @Provides
