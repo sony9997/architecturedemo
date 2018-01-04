@@ -10,7 +10,7 @@ import android.arch.persistence.room.Update;
 
 import java.util.List;
 
-import org.hed.archdemo.model.User;
+import org.hed.archdemo.vo.User;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 

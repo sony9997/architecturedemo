@@ -2,7 +2,7 @@ package org.hed.archdemo.repository.web;
 
 import java.util.List;
 
-import org.hed.archdemo.model.User;
+import org.hed.archdemo.vo.User;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 

@@ -3,7 +3,7 @@ package org.hed.archdemo.repository;
 import android.arch.lifecycle.LiveData;
 import android.util.Log;
 
-import org.hed.archdemo.model.User;
+import org.hed.archdemo.vo.User;
 import org.hed.archdemo.repository.db.dao.UserDao;
 import org.hed.archdemo.repository.web.GithubApi;
 

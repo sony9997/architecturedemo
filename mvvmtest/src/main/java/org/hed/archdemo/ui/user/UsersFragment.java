@@ -17,7 +17,7 @@ import org.hed.archdemo.R;
 import org.hed.archdemo.databinding.ListFragmentBinding;
 import org.hed.archdemo.databinding.UsersItemBinding;
 import org.hed.archdemo.di.Injectable;
-import org.hed.archdemo.model.User;
+import org.hed.archdemo.vo.User;
 
 import java.util.List;
 

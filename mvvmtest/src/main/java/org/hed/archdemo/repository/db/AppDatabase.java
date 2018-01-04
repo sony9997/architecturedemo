@@ -3,7 +3,7 @@ package org.hed.archdemo.repository.db;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.RoomDatabase;
 
-import org.hed.archdemo.model.User;
+import org.hed.archdemo.vo.User;
 import org.hed.archdemo.repository.db.dao.UserDao;
 
 /**

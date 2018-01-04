@@ -1,4 +1,4 @@
-package org.hed.archdemo.model;
+package org.hed.archdemo.vo;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
